@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="500" height="500" style="background: #eee;"></canvas>
+	
+		<script type="text/javascript">
+			
+			window.onload = function(){
+				
+				var myCanvas = document.getElementById("myCanvas");
+				
+//				1.创建绘图环境
+				var ctx = myCanvas.getContext("2d");
+				
+//				2.设置初始旋转角度
+				var rotateNum = 0;
+				
+//				3.记录缩放次数
+				var scaleNum = 0;
+				
+//				4.标识缩 | 放(1为放大, -1为缩小)
+				var value = 1;
+				
+//				5.设置定时器
+				var timer = null;
+				
+				clearInterval(timer);
+				
+				timer = setInterval(function(){
+					
+					rotateNum++;	//旋转角度依次加一
+					
+					ctx.clearRect(0,0,myCanvas.width,myCanvas.height);  //清空画布
+					
+					ctx.save();   //保存初始状态
+					
+					ctx.translate(myCanvas.width/2, myCanvas.height/2);	//将矩形的起始点移到画布中间位置
+					
+					if(scaleNum == 0){
+						
+						value = 1;
+						
+					}
+					if(scaleNum == 100){
+						
+						value = -1;
+						
+					}
+					
+					scaleNum += value;		//缩放系数变换(放大时系数增加,缩小时系数减少)
+					
+					ctx.scale(scaleNum/50,scaleNum/50);		//缩放
+					
+					ctx.rotate(rotateNum*Math.PI/180);		//旋转
+					
+					ctx.translate(-50,-50);		//将方块移动到画布中间
+					
+					ctx.fillRect(0,0,100,100);
+					
+					ctx.restore();
+					
+				},10)
+				
+				
+				
+			}
+			
+		</script>
+	</body>
+</html>
